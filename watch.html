@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>시계</title>
+    <script src="jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="app.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="watch">
+            <div class="hour">
+                <div class="box">00</div>
+                <div class="box">01</div>
+            </div>
+            <div class="minute">
+                <div class="box">00</div>
+                <div class="box">01</div>
+            </div>
+            <div class="second">
+                <div class="box">00</div>
+                <div class="box">01</div>
+            </div>
+        </div>
+        <div class="control">
+            <button id="start">시작</button>
+            <button id="stop">정지</button>
+        </div>
+    </div>
+
+    <script>
+        let id;
+        $("#stop").on("click", e => {
+            clearInterval(id);
+        });
+
+        $("#start").on("click", e => {
+            id = setInterval(interval, 1000);
+        });
+        let now = new Date();
+        let b = [("00" + now.getHours()).substr(-2),
+        ("00" + now.getMinutes()).substr(-2),
+        ("00" + now.getSeconds()).substr(-2)];
+
+        let interval = function () {
+            let now = new Date();
+            let h = ("00" + now.getHours()).substr(-2);
+            let m = ("00" + now.getMinutes()).substr(-2);
+            let s = ("00" + now.getSeconds()).substr(-2);
+            let time = [h, m, s];
+            const log = console.log;
+            log(time);
+            log(b);
+            $(".hour > .box").eq(1).text(h);
+            $(".minute > .box").eq(1).text(m);
+            $(".second > .box").eq(1).text(s);
+
+            if (b[0] != time[0]) {
+                $(".hour > .box").eq(1).animate({ "top": 0 }, 500);
+                $(".hour > .box").eq(0).animate({ "top": "-100%" }, 500);
+
+            }
+
+            if (b[1] != time[1]) {
+                $(".minute > .box").eq(1).animate({ "top": 0 }, 500);
+                $(".minute > .box").eq(0).animate({ "top": "-100%" }, 500);
+
+            }
+
+            if (b[2] != time[2]) {
+                $(".second > .box").eq(1).animate({ "top": 0 }, 500);
+                $(".second > .box").eq(0).animate({ "top": "-100%" }, 500);
+
+            }
+
+            setTimeout(function () {
+                $(".hour > .box").eq(0).text(h);
+                $(".minute > .box").eq(0).text(m);
+                $(".second > .box").eq(0).text(s);
+
+                if (b[0] != time[0]) {
+                    $(".hour > .box").eq(0).css({ "top": 0 });
+                    $(".hour > .box").eq(1).css({ "top": "100%" });
+                }
+                if (b[1] != time[1]) {
+                    $(".minute > .box").eq(0).css({ "top": 0 });
+                    $(".minute > .box").eq(1).css({ "top": "100%" });
+
+                }
+
+                if (b[2] != time[2]) {
+                    $(".second > .box").eq(0).css({ "top": 0 });
+                    $(".second > .box").eq(1).css({ "top": "100%" });
+                }
+
+                b = time;
+            }, 600);
+        };
+
+    </script>
+</body>
+
+</html>
