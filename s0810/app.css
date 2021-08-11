@@ -71,6 +71,7 @@
     border-radius: 50%;
     background-color: #ddd;
     cursor: pointer;
+    margin: 1px;
 }
 
 .slide > .pin-container > .pin.active {
